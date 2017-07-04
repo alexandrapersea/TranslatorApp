@@ -4,6 +4,7 @@ import { View, StatusBar } from 'react-native';
 import { Container } from '../components/Container';
 import { Logo } from '../components/Logo';
 import { InputWithButton } from '../components/TextInput';
+import { ClearButton } from '../components/Buttons';
 
 const TEMP_BASE_LANGUAGE = 'ENG';
 const TEMP_QUOTE_LANGUAGE = 'RO';
@@ -30,6 +31,10 @@ class Splash extends Component {
           editable={false}
           value={'Salut lume'}
         />
+      <ClearButton
+        text="Reverse"
+        onPress={() => console.log('press')}
+      />
       </Container>
     );
   }
