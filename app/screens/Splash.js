@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar } from 'react-native';
+import { StatusBar, KeyboardAvoidingView } from 'react-native';
 
 import { Container } from '../components/Container';
 import { Logo } from '../components/Logo';
@@ -22,23 +22,25 @@ class Splash extends Component {
         <Header
           onPress={() => console.log('press')}
         />
-        <Logo />
-        <InputWithButton
-          buttonText={TEMP_BASE_LANGUAGE}
-          onPress={() => { console.log('press')}}
-          defaultValue={'Hello World'}
-          onChangeText={this.handleTextChange}
-        />
-        <InputWithButton
-          buttonText={TEMP_QUOTE_LANGUAGE}
-          onPress={() => { console.log('press')}}
-          editable={false}
-          value={'Salut lume'}
-        />
-      <ClearButton
-        text="Reverse"
-        onPress={() => console.log('press')}
-      />
+        <KeyboardAvoidingView behavior="padding">
+          <Logo />
+          <InputWithButton
+            buttonText={TEMP_BASE_LANGUAGE}
+            onPress={() => { console.log('press')}}
+            defaultValue={'Hello World'}
+            onChangeText={this.handleTextChange}
+          />
+          <InputWithButton
+            buttonText={TEMP_QUOTE_LANGUAGE}
+            onPress={() => { console.log('press')}}
+            editable={false}
+            value={'Salut lume'}
+          />
+          <ClearButton
+            text="Reverse"
+            onPress={() => console.log('press')}
+          />
+        </KeyboardAvoidingView>
       </Container>
     );
   }
