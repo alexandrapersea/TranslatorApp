@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { Text, FlatList, View, StatusBar } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { ListItem, Separator } from '../components/List';
 import languages from '../data/languages';
 
 class LanguageList extends Component {
+  static propTypes = {
+    navigation: PropTypes.object,
+  }
+
   handlePress = () => {
-    console.log('press');
+    this.props.navigation.goBack(null);
   }
 
   render() {

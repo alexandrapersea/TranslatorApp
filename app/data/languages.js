@@ -1,4 +1,4 @@
 export default [
   'EN',
-  'RON',
+  'RO',
 ];

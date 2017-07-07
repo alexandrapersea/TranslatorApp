@@ -1,6 +1,7 @@
 import React from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
+import Navigator from './config/routes';
 import Splash from './screens/Splash';
 import LanguageList from './screens/LanguageList';
 
@@ -12,4 +13,4 @@ EStyleSheet.build({
   $darkText: '#343434',
 });
 
-export default () => <LanguageList />;
+export default () => <Navigator />;
