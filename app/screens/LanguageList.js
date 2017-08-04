@@ -1,20 +1,36 @@
 import React, { Component } from 'react';
 import { Text, FlatList, View, StatusBar } from 'react-native';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { ListItem, Separator } from '../components/List';
 import languages from '../data/languages';
+import { changeBaseLanguage, changeQuoteLanguage } from '../actions/languages';
 
 class LanguageList extends Component {
   static propTypes = {
     navigation: PropTypes.object,
+    dispatch: PropTypes.func,
+    baseLanguage: PropTypes.string,
+    quoteLanugage: PropTypes.string,
   }
 
-  handlePress = () => {
+  handlePress = (language) => {
+    const { type } = this.props.navigation.state.params;
+    if (type === 'base') {
+      this.props.dispatch(changeBaseLanguage(language));
+    } else if (type === 'quote') {
+      this.props.dispatch(changeQuoteLanguage(language));
+    }
     this.props.navigation.goBack(null);
   }
 
   render() {
+    let selectedLanguage = this.props.baseLanguage;
+    if (this.props.navigation.state.params.type === 'quote') {
+      selectedLanguage = this.props.quoteLanugage;
+    }
+
     return (
       <View style={{ flex: 1}}>
         <StatusBar barStyle="default" translucent={false} />
@@ -23,8 +39,8 @@ class LanguageList extends Component {
           renderItem={({ item }) =>
             <ListItem
             text={item}
-            selected={item === 'EN'}
-            onPress={this.handlePress}
+            selected={item === selectedLanguage}
+            onPress={() => this.handlePress(item)}
             />
           }
           keyExtractor={item => item}
@@ -35,4 +51,9 @@ class LanguageList extends Component {
   }
 }
 
-export default LanguageList;
+const mapStateToProps = (state) => ({
+  baseLanguage: state.languages.baseLanguage,
+  quoteLanugage: state.languages.quoteLanugage,
+});
+
+export default connect(mapStateToProps)(LanguageList);
