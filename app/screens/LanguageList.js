@@ -38,7 +38,7 @@ class LanguageList extends Component {
           data={languages}
           renderItem={({ item }) =>
             <ListItem
-            text={item}
+            text={item.toUpperCase()}
             selected={item === selectedLanguage}
             onPress={() => this.handlePress(item)}
             />

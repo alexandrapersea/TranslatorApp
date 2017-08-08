@@ -10,7 +10,7 @@ import { ClearButton } from '../components/Buttons';
 import { Header } from '../components/Header';
 import { connectAlert } from '../components/Alert';
 
-import { swapLanguage, changePhrase } from '../actions/languages';
+import { swapLanguage, changePhrase, getInitialTranslation } from '../actions/languages';
 
 class Splash extends Component {
   static propTypes = {
@@ -21,6 +21,18 @@ class Splash extends Component {
     quoteLanugage: PropTypes.string,
     phrase: PropTypes.string,
     translation: PropTypes.string,
+    translationError: PropTypes.string,
+    alertWithType: PropTypes.func,
+  }
+
+  componentWillMount() {
+    this.props.dispatch(getInitialTranslation());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.translationError && !this.props.translationError) {
+      this.props.alertWithType('error', 'Error', nextProps.translationError);
+    }
   }
 
   handleTextChange = (text) => {
@@ -57,13 +69,13 @@ class Splash extends Component {
         <KeyboardAvoidingView behavior="padding">
           <Logo />
           <InputWithButton
-            buttonText={this.props.baseLanguage}
+            buttonText={this.props.baseLanguage.toUpperCase()}
             onPress={this.handlePressBaseLanguage}
             defaultValue={this.props.phrase}
             onChangeText={this.handleTextChange}
           />
           <InputWithButton
-            buttonText={this.props.quoteLanugage}
+            buttonText={this.props.quoteLanugage.toUpperCase()}
             onPress={this.handlePressQuoteLanguage}
             editable={false}
             value={translation}
@@ -88,7 +100,8 @@ const mapStateToProps = (state) => {
     phrase: state.languages.phrase,
     translation: state.languages.translation,
     isFetching: state.languages.isFetching,
+    translationError: state.languages.error
   }
 }
 
-export default connect(mapStateToProps)(Splash);
+export default connect(mapStateToProps)(connectAlert(Splash));
